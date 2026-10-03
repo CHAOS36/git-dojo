@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demo Shop - Order confirmed</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/products.html">Demo Shop</a>
+    <nav>
+      <a href="/cart.html" data-testid="cart-link">Cart <span class="badge" data-testid="cart-badge" hidden></span></a>
+      <button type="button" id="logout" class="link-button">Log out</button>
+    </nav>
+  </header>
+  <main>
+    <h1>Thank you for your order!</h1>
+    <p data-testid="order-summary"></p>
+    <a class="button" href="/products.html">Back to products</a>
+  </main>
+  <script src="/shop.js"></script>
+  <script>
+    Shop.requireLogin();
+    Shop.renderHeader();
+    const order = JSON.parse(localStorage.getItem('lastOrder') || 'null');
+    document.querySelector('[data-testid="order-summary"]').textContent = order
+      ? `Order #${order.number}: ${order.items} item(s), total ${Shop.formatPrice(order.total)}`
+      : 'No recent order.';
+  </script>
+</body>
+</html>

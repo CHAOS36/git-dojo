@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demo Shop - Checkout</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/products.html">Demo Shop</a>
+    <nav>
+      <a href="/cart.html" data-testid="cart-link">Cart <span class="badge" data-testid="cart-badge" hidden></span></a>
+      <button type="button" id="logout" class="link-button">Log out</button>
+    </nav>
+  </header>
+  <main>
+    <h1>Checkout</h1>
+    <form id="checkout-form" novalidate>
+      <label for="first-name">First name</label>
+      <input id="first-name" autocomplete="given-name">
+      <label for="last-name">Last name</label>
+      <input id="last-name" autocomplete="family-name">
+      <label for="postal-code">Postal code</label>
+      <input id="postal-code" autocomplete="postal-code">
+      <p id="checkout-error" class="error" role="alert" hidden></p>
+      <p class="total">Total: <strong data-testid="checkout-total"></strong></p>
+      <button type="submit">Place order</button>
+    </form>
+  </main>
+  <script src="/shop.js"></script>
+  <script>
+    Shop.requireLogin();
+    Shop.renderHeader();
+    if (Shop.getCart().length === 0) location.replace('/cart.html');
+
+    const form = document.getElementById('checkout-form');
+    const errorMessage = document.getElementById('checkout-error');
+    document.querySelector('[data-testid="checkout-total"]').textContent = Shop.formatPrice(Shop.cartTotal());
+
+    const requiredFields = [
+      ['first-name', 'First name is required'],
+      ['last-name', 'Last name is required'],
+      ['postal-code', 'Postal code is required'],
+    ];
+
+    form.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const missing = requiredFields.find(([id]) => !document.getElementById(id).value.trim());
+      if (missing) {
+        errorMessage.textContent = missing[1];
+        errorMessage.hidden = false;
+        return;
+      }
+      const order = { number: Math.floor(10000 + Math.random() * 90000), items: Shop.getCart().length, total: Shop.cartTotal() };
+      localStorage.setItem('lastOrder', JSON.stringify(order));
+      Shop.saveCart([]);
+      location.href = '/confirmation.html';
+    });
+  </script>
+</body>
+</html>

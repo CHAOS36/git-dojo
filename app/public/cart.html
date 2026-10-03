@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Demo Shop - Cart</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/products.html">Demo Shop</a>
+    <nav>
+      <a href="/cart.html" data-testid="cart-link">Cart <span class="badge" data-testid="cart-badge" hidden></span></a>
+      <button type="button" id="logout" class="link-button">Log out</button>
+    </nav>
+  </header>
+  <main>
+    <h1>Your cart</h1>
+    <p id="empty-cart" hidden>Your cart is empty.</p>
+    <ul id="cart-list" class="cart-list"></ul>
+    <p class="total">Total: <strong data-testid="cart-total"></strong></p>
+    <div class="actions">
+      <a class="button secondary" href="/products.html">Continue shopping</a>
+      <button type="button" id="checkout">Checkout</button>
+    </div>
+  </main>
+  <script src="/shop.js"></script>
+  <script>
+    Shop.requireLogin();
+    Shop.renderHeader();
+
+    const list = document.getElementById('cart-list');
+
+    function render() {
+      const cart = Shop.getCart();
+      list.innerHTML = '';
+      for (const product of cart) {
+        const item = document.createElement('li');
+        item.dataset.testid = 'cart-item';
+        item.innerHTML = '<span data-testid="item-name"></span><span data-testid="item-price"></span><button type="button">Remove</button>';
+        item.querySelector('[data-testid="item-name"]').textContent = product.name;
+        item.querySelector('[data-testid="item-price"]').textContent = Shop.formatPrice(product.price);
+        item.querySelector('button').onclick = () => {
+          Shop.removeFromCart(product.id);
+          render();
+        };
+        list.append(item);
+      }
+      document.getElementById('empty-cart').hidden = cart.length > 0;
+      document.getElementById('checkout').hidden = cart.length === 0;
+      document.querySelector('[data-testid="cart-total"]').textContent = Shop.formatPrice(Shop.cartTotal());
+    }
+
+    document.getElementById('checkout').onclick = () => (location.href = '/checkout.html');
+    render();
+  </script>
+</body>
+</html>
