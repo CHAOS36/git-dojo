@@ -5,6 +5,7 @@ C'est le projet d'équipe du **Git Dojo** : Badr et Claude y travaillent ensembl
 
 ## L'équipe
 
+- Badr
 - Claude
 
 ## Lancer le projet
