@@ -1,0 +1,4 @@
+# Fins de ligne : toujours LF, dans le dépôt comme sur le disque de chacun.
+# Sans cette règle, Windows (CRLF) et Linux (LF) se disputent les fins de ligne
+# et Git croit que des fichiers entiers ont changé : de faux conflits.
+* text=auto eol=lf

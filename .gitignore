@@ -1,0 +1,10 @@
+# Bibliothèques téléchargées par npm (se réinstallent avec "npm install")
+node_modules/
+
+# Résultats générés à chaque lancement des tests
+test-results/
+playwright-report/
+blob-report/
+
+# Sessions de connexion sauvegardées (contiennent des jetons)
+playwright/.auth/
