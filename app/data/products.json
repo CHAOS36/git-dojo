@@ -4,5 +4,6 @@
   { "id": 3, "name": "Bolt T-Shirt", "price": 15.99 },
   { "id": 4, "name": "Fleece Jacket", "price": 49.99 },
   { "id": 5, "name": "Onesie", "price": 7.99 },
+  { "id": 7, "name": "Sunglasses", "price": 19.99 },
   { "id": 6, "name": "Water Bottle", "price": 11.99 }
 ]
