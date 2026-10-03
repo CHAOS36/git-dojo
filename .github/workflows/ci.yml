@@ -1,0 +1,40 @@
+# La pipeline de l'équipe : à chaque envoi sur main et à chaque Pull Request,
+# GitHub prête une machine Linux qui installe le projet et lance les tests Playwright.
+name: Tests Playwright
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      # 1. Récupérer le code du dépôt
+      - uses: actions/checkout@v7
+
+      # 2. Installer Node.js
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: npm
+
+      # 3. Installer les bibliothèques du projet (exactement celles de package-lock.json)
+      - run: npm ci
+
+      # 4. Installer le navigateur Chromium et ce dont il a besoin sous Linux
+      - run: npx playwright install --with-deps chromium
+
+      # 5. Lancer les tests
+      - run: npx playwright test
+
+      # 6. Garder le rapport HTML, même si des tests échouent (onglet "Summary" du lancement)
+      - uses: actions/upload-artifact@v7
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
