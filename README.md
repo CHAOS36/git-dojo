@@ -14,6 +14,7 @@ C'est le projet d'équipe du **Git Dojo** : Badr et Claude y travaillent ensembl
 npm install                     # installe les bibliothèques
 npx playwright install chromium # installe le navigateur des tests
 npm test                        # lance les tests
+npx playwright test tests/01-login.spec.ts  # lance un seul fichier de tests
 npm run app                     # lance la boutique sur http://localhost:3000
 ```
 
