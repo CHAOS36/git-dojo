@@ -18,3 +18,4 @@
 5. **Après l'envoi, vérifie que la pipeline est verte** (onglet Actions sur GitHub).
 6. **Jamais de « force push » sur `main`** : il écrase le travail des autres.
 7. **Perdu ? Demande avant de forcer quoi que ce soit.**
+8. **Une branche par sujet.**
