@@ -45,16 +45,16 @@ test.describe('Purchase', () => {
 
   test('removing products updates the cart', async ({ productsPage, cartPage }) => {
     await productsPage.addToCart('Backpack');
-    await productsPage.addToCart('Bike Light');
+    await productsPage.addToCart('Sunglasses');
     await productsPage.openCart();
 
     // Retirer un produit : il disparaît et le total baisse
     await cartPage.removeItem('Backpack');
-    await expect(cartPage.itemNames).toHaveText(['Bike Light']);
-    await expect(cartPage.total).toHaveText('$9.99');
+    await expect(cartPage.itemNames).toHaveText(['Sunglasses']);
+    await expect(cartPage.total).toHaveText('$19.99');
 
     // Retirer le dernier : panier vide, et plus de bouton "Checkout"
-    await cartPage.removeItem('Bike Light');
+    await cartPage.removeItem('Sunglasses');
     await expect(cartPage.emptyMessage).toBeVisible();
     await expect(cartPage.checkoutButton).toBeHidden();
   });
