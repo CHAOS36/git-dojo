@@ -1,5 +1,7 @@
 # Demo Shop
 
+![Tests Playwright](https://github.com/CHAOS36/git-dojo/actions/workflows/ci.yml/badge.svg)
+
 Une mini-boutique en ligne et ses tests automatisés Playwright.
 C'est le projet d'équipe du **Git Dojo** : Badr et Claude y travaillent ensemble pour s'entraîner au travail en équipe avec Git.
 
