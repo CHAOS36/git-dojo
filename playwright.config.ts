@@ -1,6 +1,13 @@
 // Réglages de Playwright : ce fichier est lu à chaque "npx playwright test".
 import { defineConfig, devices } from '@playwright/test';
 
+// Port de la mini-boutique pendant les tests : 3000 par défaut.
+// Si un autre clone du projet occupe déjà ce port (par exemple Playwright ouvert dans VS Code),
+// les tests réutiliseraient SA boutique et ses données : choisis alors un autre port.
+//   Git Bash : PORT=3100 npx playwright test
+//   PowerShell : $env:PORT=3100; npx playwright test
+const PORT = Number(process.env.PORT) || 3000;
+
 export default defineConfig({
   // Dossier où Playwright cherche les fichiers de test (ceux qui finissent par .spec.ts)
   testDir: './tests',
@@ -18,7 +25,7 @@ export default defineConfig({
   reporter: [['list'], ['html', { open: 'never' }]],
 
   use: {
-    baseURL: 'http://localhost:3000',
+    baseURL: `http://localhost:${PORT}`,
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
   },
@@ -31,7 +38,7 @@ export default defineConfig({
   // Playwright démarre la mini-boutique avant les tests et l'arrête après
   webServer: {
     command: 'node app/server.js',
-    url: 'http://localhost:3000',
+    url: `http://localhost:${PORT}`,
     reuseExistingServer: !process.env.CI,
   },
 });
