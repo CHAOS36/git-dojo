@@ -23,38 +23,38 @@ test.describe('Purchase', () => {
   test('a user can buy two products', async ({ productsPage, cartPage, checkoutPage, confirmationPage }) => {
     // 1. Ajouter deux produits : le badge du panier affiche 2
     await productsPage.addToCart('Backpack');
-    await productsPage.addToCart('Bike Light');
+    await productsPage.addToCart('Sunglasses');
     await expect(productsPage.cartBadge).toHaveText('2');
 
     // 2. Le panier contient ces deux produits (liste vérifiée d'un coup, dans l'ordre)
-    //    et le total est bon : 29.99 + 9.99 = 39.98
+    //    et le total est bon : 29.99 + 19.99 = 49.98
     await productsPage.openCart();
-    await expect(cartPage.itemNames).toHaveText(['Backpack', 'Bike Light']);
-    await expect(cartPage.total).toHaveText('$39.98');
+    await expect(cartPage.itemNames).toHaveText(['Backpack', 'Sunglasses']);
+    await expect(cartPage.total).toHaveText('$49.98');
 
     // 3. Commander
     await cartPage.checkout();
     await checkoutPage.fillCustomerInfo(customer);
-    await expect(checkoutPage.total).toHaveText('$39.98');
+    await expect(checkoutPage.total).toHaveText('$49.98');
     await checkoutPage.placeOrder();
 
     // 4. La confirmation s'affiche, avec le bon récapitulatif
     await expect(confirmationPage.heading).toBeVisible();
-    await expect(confirmationPage.orderSummary).toContainText('2 item(s), total $39.98');
+    await expect(confirmationPage.orderSummary).toContainText('2 item(s), total $49.98');
   });
 
   test('removing products updates the cart', async ({ productsPage, cartPage }) => {
     await productsPage.addToCart('Backpack');
-    await productsPage.addToCart('Bike Light');
+    await productsPage.addToCart('Sunglasses');
     await productsPage.openCart();
 
     // Retirer un produit : il disparaît et le total baisse
     await cartPage.removeItem('Backpack');
-    await expect(cartPage.itemNames).toHaveText(['Bike Light']);
-    await expect(cartPage.total).toHaveText('$9.99');
+    await expect(cartPage.itemNames).toHaveText(['Sunglasses']);
+    await expect(cartPage.total).toHaveText('$19.99');
 
     // Retirer le dernier : panier vide, et plus de bouton "Checkout"
-    await cartPage.removeItem('Bike Light');
+    await cartPage.removeItem('Sunglasses');
     await expect(cartPage.emptyMessage).toBeVisible();
     await expect(cartPage.checkoutButton).toBeHidden();
   });
