@@ -8,7 +8,7 @@ C'est le projet d'équipe du **Git Dojo** : Badr et Claude y travaillent ensembl
 ## L'équipe
 
 - Badr
-- Claude
+- Claude : tests de l'API
 
 ## Lancer le projet
 
