@@ -27,20 +27,20 @@ test.describe('Purchase', () => {
     await expect(productsPage.cartBadge).toHaveText('2');
 
     // 2. Le panier contient ces deux produits (liste vérifiée d'un coup, dans l'ordre)
-    //    et le total est bon : 24.99 + 9.99 = 34.98
+    //    et le total est bon : 24.99 + 7.49 = 32.48
     await productsPage.openCart();
     await expect(cartPage.itemNames).toHaveText(['Backpack', 'Bike Light']);
-    await expect(cartPage.total).toHaveText('$34.98');
+    await expect(cartPage.total).toHaveText('$32.48');
 
     // 3. Commander
     await cartPage.checkout();
     await checkoutPage.fillCustomerInfo(customer);
-    await expect(checkoutPage.total).toHaveText('$34.98');
+    await expect(checkoutPage.total).toHaveText('$32.48');
     await checkoutPage.placeOrder();
 
     // 4. La confirmation s'affiche, avec le bon récapitulatif
     await expect(confirmationPage.heading).toBeVisible();
-    await expect(confirmationPage.orderSummary).toContainText('2 item(s), total $34.98');
+    await expect(confirmationPage.orderSummary).toContainText('2 item(s), total $32.48');
   });
 
   test('removing products updates the cart', async ({ productsPage, cartPage }) => {
