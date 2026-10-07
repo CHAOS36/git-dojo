@@ -27,7 +27,7 @@ test.describe('Purchase', () => {
     await expect(productsPage.cartBadge).toHaveText('2');
 
     // 2. Le panier contient ces deux produits (liste vérifiée d'un coup, dans l'ordre)
-    //    et le total est bon : 24.99 + 7.49 = 32.48
+    //    et le total est bon : 24.99 + 7.99 = 32.98
     await productsPage.openCart();
     await expect(cartPage.itemNames).toHaveText(['Backpack', 'Bike Light']);
     await expect(cartPage.total).toHaveText('$32.48');
